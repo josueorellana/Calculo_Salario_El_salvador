@@ -14,6 +14,14 @@ let botonNoInteresa = document.getElementById("nombreNoInteresa");
 let botonAceptar = document.getElementById("nombreAceptar");
 let toastTimeout;
 
+// Validación del nombre: solo letras y máximo 50 caracteres
+nombreInput.setAttribute("maxlength", "30");
+nombreInput.addEventListener("input", function() {
+  const valor = nombreInput.value;
+  const soloLetras = valor.replace(/[^a-zA-ZÀ-ÿÑñ\s]/g, "");
+  nombreInput.value = soloLetras.slice(0, 30);
+});
+
 // Expresión regular para validar solo números enteros y fraccionarios
 const patronValido = /^[0-9]*\.?[0-9]*$/;
 
@@ -120,14 +128,14 @@ botonCalcular.addEventListener("click", function() {
   let valor = salarioIngresado.value.trim();
 
   if (valor === "" || !patronValido.test(valor)) {
-    mostrarToast("¡Por favor ingresa un salario !");
+    mostrarToast("¡Por favor ingresa un sueldo !");
     return;
   }
 
   let salario = parseFloat(valor);
 
   if (isNaN(salario)) {
-    mostrarToast("Ingresa un salario válido");
+    mostrarToast("Ingresa un sueldo válido");
     return;
   }
 
@@ -213,7 +221,6 @@ botonNoInteresa.addEventListener("click", async function() {
 botonAceptar.addEventListener("click", async function() {
   const nombre = nombreInput.value.trim();
   if (nombre === "") {
-    mostrarToast("Por favor ingresa tu nombre");
     return;
   }
   try {
