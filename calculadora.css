@@ -1,0 +1,132 @@
+.body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+.contenedor {
+  background-color: #4a609e;
+  border-radius: 12px;
+  height: 600px;
+}
+.titulo {
+  text-align: center;
+  padding: 1px;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+.saludoUsuario {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 15px;
+}
+.ingresoSalario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.labelSalario {
+  font-size: 40px;
+  color: white;
+  margin-right: 10px;
+  font-weight: bold;
+}
+.cajaIngresanSalario {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+.botonLimpiar {
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-left: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  box-shadow: #423d3d 2px 4px 6px;
+}
+.botonLimpiar:disabled,
+.botonLimpiar:disabled:hover {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+}
+.botonContenedorCalcular {
+  margin-top: 30px;
+  text-align: center;
+}
+.btnCalcular {
+  font-size: 30px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #008CBA;
+  color: white;
+  cursor: pointer;
+  box-shadow: #423d3d 2px 4px 6px;
+}
+.btnCalcular:hover {
+  background-color: #007bb5;
+}
+.muestraDescuentos {
+  text-align: center;
+  margin-top: 10px;
+  padding: 20px;
+}
+.descuentoIsss {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+}
+.descuentoAfp {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  margin-left: 150px;
+}
+.descuentoIsr {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  margin-left: 150px;
+}
+.muestraSalarioNeto {
+  text-align: center;
+  margin-top: 10px;
+  padding: 20px;
+}
+.salarioNeto {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+}
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f44336;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+.toast.mostrar {
+  opacity: 1;
+  pointer-events: auto;
+}

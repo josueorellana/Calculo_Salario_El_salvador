@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiSalario</title>
+  <link rel="stylesheet" href="calculadora.css">
+</head>
+<body>
+  <div class ="contenedor">
+    <div class="titulo">
+      <h1>Calcula tu salario</h1>
+    </div>
+    <div class="saludoUsuario">
+      <label class="nombreUsuario">Hola ! David</label>
+    </div>
+    <div class="ingresoSalario">
+      <label class="labelSalario" for="salarioIngresado">Ingresa tu salario:</label>
+      <input class="cajaIngresanSalario" type="text" id="salarioIngresado" name="salarioIngresado" placeholder="Ingresa tu salario mensual">
+      <button class="botonLimpiar" id="limpiar" disabled>Limpiar</button>
+    </div>
+    <div class="botonContenedorCalcular">
+      <button class="btnCalcular" id="calcular">Calcular</button>
+    </div>
+    <div class="muestraDescuentos">
+      <label id="isss" class="descuentoIsss" >ISSS: $</label>
+      <label id="afp" class="descuentoAfp" >AFP: $</label>
+      <label id="isr" class="descuentoIsr" >ISR: $</label>
+    </div>
+    <div class="muestraSalarioNeto">
+      <label id="salarioNeto" class="salarioNeto" >Salario Neto: $</label>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="calculadora.js"></script>
+</body>
+</html>
