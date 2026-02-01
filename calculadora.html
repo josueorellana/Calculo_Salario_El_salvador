@@ -12,7 +12,7 @@
       <h1>Calcula tu sueldo</h1>
     </div>
     <div class="saludoUsuario">
-      <label class="nombreUsuario">Hola ! David</label>
+      <label class="nombreUsuario oculto">Hola ! <span id="nombreUsuarioTexto"></span></label>
     </div>
     <div class="ingresoSalario">
       <label class="labelSalario" for="salarioIngresado">Ingresa tu sueldo:</label>
@@ -32,6 +32,16 @@
     </div>
     <div class="muestraSalarioNeto">
       <label id="salarioNeto" class="salarioNeto" >Sueldo Neto: $</label>
+    </div>
+  </div>
+  <div class="modal-overlay" id="nombreModal" aria-hidden="true">
+    <div class="modal">
+      <p class="modal-texto">¿ Como te podemos llamar, cual es tu nombre ?</p>
+      <input type="text" id="nombreInput" class="modal-input" placeholder="Escribe tu nombre">
+      <div class="modal-botones">
+        <button class="btnModal secundario" id="nombreNoInteresa">No me interesa</button>
+        <button class="btnModal primario" id="nombreAceptar">Aceptar</button>
+      </div>
     </div>
   </div>
   <div class="toast" id="toast"></div>

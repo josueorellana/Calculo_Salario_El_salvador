@@ -6,6 +6,12 @@ let isrLabel = document.getElementById("isr");
 let botonCalcular = document.getElementById("calcular");
 let salarioNetoLabel = document.getElementById("salarioNeto");
 let botonLimpiar = document.getElementById("limpiar");
+let nombreLabel = document.querySelector(".nombreUsuario");
+let nombreTexto = document.getElementById("nombreUsuarioTexto");
+let nombreModal = document.getElementById("nombreModal");
+let nombreInput = document.getElementById("nombreInput");
+let botonNoInteresa = document.getElementById("nombreNoInteresa");
+let botonAceptar = document.getElementById("nombreAceptar");
 let toastTimeout;
 
 // Expresión regular para validar solo números enteros y fraccionarios
@@ -31,6 +37,72 @@ function mostrarToast(mensaje) {
 // Función para limpiar la caja de texto
 function limpiarCaja() {
   salarioIngresado.value = "";
+}
+
+function mostrarNombre(nombre) {
+  nombreTexto.textContent = nombre;
+  nombreLabel.classList.remove("oculto");
+}
+
+function ocultarNombre() {
+  nombreTexto.textContent = "";
+  nombreLabel.classList.add("oculto");
+}
+
+function mostrarModal() {
+  nombreModal.classList.add("mostrar");
+  nombreModal.setAttribute("aria-hidden", "false");
+  nombreInput.focus();
+}
+
+function ocultarModal() {
+  nombreModal.classList.remove("mostrar");
+  nombreModal.setAttribute("aria-hidden", "true");
+}
+
+async function obtenerEstadoNombre() {
+  try {
+    const respuesta = await fetch("nombre.php?action=get", { cache: "no-store" });
+    if (!respuesta.ok) return { nombre: "", dismissed: false };
+    return await respuesta.json();
+  } catch (e) {
+    return { nombre: "", dismissed: false };
+  }
+}
+
+async function guardarNombre(nombre) {
+  const respuesta = await fetch("nombre.php?action=set", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre })
+  });
+  if (!respuesta.ok) {
+    throw new Error("No se pudo guardar el nombre");
+  }
+  return await respuesta.json();
+}
+
+async function descartarNombre() {
+  await fetch("nombre.php?action=dismiss", { method: "POST" });
+}
+
+async function initNombreUsuario() {
+  const estado = await obtenerEstadoNombre();
+
+  if (estado.nombre) {
+    mostrarNombre(estado.nombre);
+    return;
+  }
+
+  ocultarNombre();
+
+  if (estado.dismissed) {
+    return;
+  }
+
+  setTimeout(() => {
+    mostrarModal();
+  }, 3000);
 }
 
 // Event listener para validar entrada en tiempo real
@@ -131,4 +203,27 @@ botonLimpiar.addEventListener("click", function() {
   salarioIngresado.value = "";
   botonLimpiar.disabled = true;
 });
+
+botonNoInteresa.addEventListener("click", async function() {
+  await descartarNombre();
+  ocultarModal();
+  ocultarNombre();
+});
+
+botonAceptar.addEventListener("click", async function() {
+  const nombre = nombreInput.value.trim();
+  if (nombre === "") {
+    mostrarToast("Por favor ingresa tu nombre");
+    return;
+  }
+  try {
+    const resultado = await guardarNombre(nombre);
+    mostrarNombre(resultado.nombre || nombre);
+    ocultarModal();
+  } catch (e) {
+    mostrarToast("No se pudo guardar el nombre");
+  }
+});
+
+initNombreUsuario();
 
