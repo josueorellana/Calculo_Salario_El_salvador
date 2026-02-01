@@ -22,8 +22,8 @@ nombreInput.addEventListener("input", function() {
   nombreInput.value = soloLetras.slice(0, 30);
 });
 
-// Expresión regular para validar solo números enteros y fraccionarios
-const patronValido = /^[0-9]*\.?[0-9]*$/;
+// Expresión regular para validar hasta 9 dígitos enteros y 2 decimales
+const patronValido = /^\d{0,9}(\.\d{0,2})?$/;
 
 // Función para mostrar el toast
 function mostrarToast(mensaje) {
@@ -110,7 +110,7 @@ async function initNombreUsuario() {
 
   setTimeout(() => {
     mostrarModal();
-  }, 3000);
+  }, 4000);
 }
 
 // Event listener para validar entrada en tiempo real
@@ -119,7 +119,7 @@ salarioIngresado.addEventListener("input", function(e) {
   
   // Validar que solo contenga números y puntos
   if (!patronValido.test(valor)) {
-    mostrarToast("Solo se permiten números enteros o fraccionarios");
+    mostrarToast("Usá hasta 9 dígitos enteros y 2 decimales (000000000.00)");
   }
 });
 
