@@ -14,7 +14,7 @@ let botonNoInteresa = document.getElementById("nombreNoInteresa");
 let botonAceptar = document.getElementById("nombreAceptar");
 let toastTimeout;
 
-// Validación del nombre: solo letras y máximo 50 caracteres
+/*Validacion del maximo de caracteres para el nombre*/
 nombreInput.setAttribute("maxlength", "30");
 nombreInput.addEventListener("input", function() {
   const valor = nombreInput.value;
@@ -22,27 +22,27 @@ nombreInput.addEventListener("input", function() {
   nombreInput.value = soloLetras.slice(0, 30);
 });
 
-// Expresión regular para validar hasta 9 dígitos enteros y 2 decimales
+/*Expresión regular para validar hasta 9 dígitos enteros y 2 decimales*/ 
 const patronValido = /^\d{0,9}(\.\d{0,2})?$/;
 
-// Función para mostrar el toast
+/*Función para mostrar el toast*/
 function mostrarToast(mensaje) {
   toastElement.textContent = mensaje;
   toastElement.classList.add("mostrar");
   
-  // Limpiar el timeout anterior si existe
+  /*Limpiar el timeout anterior si existe*/
   if (toastTimeout) {
     clearTimeout(toastTimeout);
   }
   
-  // El toast desaparece después de 4 segundos
+  /*El toast desaparece después de 4 segundos*/
   toastTimeout = setTimeout(() => {
     toastElement.classList.remove("mostrar");
     limpiarCaja();
   }, 4000);
 }
 
-// Función para limpiar la caja de texto
+/*Función para limpiar la caja de texto*/
 function limpiarCaja() {
   salarioIngresado.value = "";
 }
@@ -113,17 +113,17 @@ async function initNombreUsuario() {
   }, 4000);
 }
 
-// Event listener para validar entrada en tiempo real
+/*Event listener para validar entrada en tiempo real*/
 salarioIngresado.addEventListener("input", function(e) {
   let valor = e.target.value;
   
-  // Validar que solo contenga números y puntos
+  /*Validar que solo contenga números y decimales*/
   if (!patronValido.test(valor)) {
     mostrarToast("Usá hasta 9 dígitos enteros y 2 decimales (000000000.00)");
   }
 });
 
-// Event listener para calcular descuentos al hacer clic
+/*Event listener para calcular descuentos al hacer clic*/
 botonCalcular.addEventListener("click", function() {
   let valor = salarioIngresado.value.trim();
 
@@ -140,16 +140,18 @@ botonCalcular.addEventListener("click", function() {
   }
 
   /* Valores del ISSS y AFP */
-  let descuentoIsss = salario * 0.03;
+  const TOPE_ISSS = 1000;
+  let baseIsss = salario > TOPE_ISSS ? TOPE_ISSS : salario;
+  let descuentoIsss = baseIsss * 0.03;
   let descuentoAfp = salario * 0.0725;
 
   isssLabel.textContent = `ISSS: $${descuentoIsss.toFixed(2)}`;
   afpLabel.textContent = `AFP: $${descuentoAfp.toFixed(2)}`;
 
-  // Renta imponible
+  /*Renta imponible*/
   let rentaImponible = salario - descuentoIsss - descuentoAfp;
 
-  // Calcular ISR según tabla 2025
+  /*Calcular ISR*/ 
   let isr = 0;
 
   if (rentaImponible <= 550) {
@@ -174,7 +176,7 @@ botonCalcular.addEventListener("click", function() {
   botonLimpiar.disabled = false; /* Boton limpiar desactivado por defecto */
 });
 
-// Efecto ripple para botones
+/*Efecto ripple para botones*/
 function aplicarRipple(boton) {
   boton.addEventListener("click", function(e) {
     const ripple = document.createElement("span");
