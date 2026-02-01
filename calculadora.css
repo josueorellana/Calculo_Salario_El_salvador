@@ -1,4 +1,4 @@
-.body {
+body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -6,7 +6,11 @@
 .contenedor {
   background-color: #4a609e;
   border-radius: 12px;
-  height: 600px;
+  height: auto;
+  min-height: 550px;
+  padding: 10px 20px 30px;
+  max-width: 900px;
+  margin: 20px auto;
 }
 .titulo {
   text-align: center;
@@ -26,6 +30,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 .labelSalario {
   font-size: 40px;
@@ -51,6 +57,17 @@
   color: white;
   cursor: pointer;
   box-shadow: #423d3d 2px 4px 6px;
+  position: relative;
+  overflow: hidden;
+}
+.contenedorDescuentos {
+  margin-top: 20px;
+  text-align: center;
+}
+.descuentos {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
 }
 .botonLimpiar:disabled,
 .botonLimpiar:disabled:hover {
@@ -60,7 +77,7 @@
   opacity: 0.7;
 }
 .botonContenedorCalcular {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 }
 .btnCalcular {
@@ -73,6 +90,8 @@
   color: white;
   cursor: pointer;
   box-shadow: #423d3d 2px 4px 6px;
+  position: relative;
+  overflow: hidden;
 }
 .btnCalcular:hover {
   background-color: #007bb5;
@@ -81,6 +100,10 @@
   text-align: center;
   margin-top: 10px;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px 40px;
 }
 .descuentoIsss {
   font-size: 30px;
@@ -91,13 +114,11 @@
   font-size: 30px;
   color: white;
   font-weight: bold;
-  margin-left: 150px;
 }
 .descuentoIsr {
   font-size: 30px;
   color: white;
   font-weight: bold;
-  margin-left: 150px;
 }
 .muestraSalarioNeto {
   text-align: center;
@@ -129,4 +150,62 @@
 .toast.mostrar {
   opacity: 1;
   pointer-events: auto;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms ease-out;
+  background-color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 24px;
+  }
+  .saludoUsuario {
+    font-size: 22px;
+    padding: 10px;
+  }
+  .labelSalario {
+    font-size: 24px;
+    text-align: center;
+  }
+  .ingresoSalario {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .cajaIngresanSalario {
+    width: 100%;
+    max-width: 320px;
+  }
+  .botonLimpiar {
+    width: 100%;
+    max-width: 320px;
+    margin-left: 0;
+  }
+  .btnCalcular {
+    width: 100%;
+    max-width: 320px;
+  }
+  .muestraDescuentos {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .descuentoIsss,
+  .descuentoAfp,
+  .descuentoIsr,
+  .salarioNeto {
+    font-size: 22px;
+  }
 }

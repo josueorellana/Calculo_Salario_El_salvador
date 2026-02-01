@@ -94,6 +94,34 @@ botonCalcular.addEventListener("click", function() {
   botonLimpiar.disabled = false; /* Boton limpiar desactivado por defecto */
 });
 
+// Efecto ripple para botones
+function aplicarRipple(boton) {
+  boton.addEventListener("click", function(e) {
+    const ripple = document.createElement("span");
+    ripple.classList.add("ripple");
+
+    const rect = boton.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+    const rippleExistente = boton.querySelector(".ripple");
+    if (rippleExistente) {
+      rippleExistente.remove();
+    }
+
+    boton.appendChild(ripple);
+
+    ripple.addEventListener("animationend", () => {
+      ripple.remove();
+    });
+  });
+}
+
+aplicarRipple(botonLimpiar);
+aplicarRipple(botonCalcular);
+
 /* Limpia los labels y el input "boton limpiar" */
 botonLimpiar.addEventListener("click", function() {
   isssLabel.textContent = "ISSS: $";
