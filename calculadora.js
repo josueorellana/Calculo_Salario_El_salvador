@@ -89,7 +89,7 @@ botonCalcular.addEventListener("click", function() {
 
   isrLabel.textContent = `ISR: $${isr.toFixed(2)}`;
   let salarioNetoLabel = document.getElementById("salarioNeto");
-  salarioNetoLabel.textContent = `Salario Neto: $${salarioNeto.toFixed(2)}`;
+  salarioNetoLabel.textContent = `Sueldo Neto: $${salarioNeto.toFixed(2)}`;
 
   botonLimpiar.disabled = false; /* Boton limpiar desactivado por defecto */
 });
@@ -99,7 +99,7 @@ botonLimpiar.addEventListener("click", function() {
   isssLabel.textContent = "ISSS: $";
   afpLabel.textContent = "AFP: $";
   isrLabel.textContent = "ISR: $";
-  salarioNetoLabel.textContent = "Salario Neto: $";
+  salarioNetoLabel.textContent = "Sueldo Neto: $";
   salarioIngresado.value = "";
   botonLimpiar.disabled = true;
 });
