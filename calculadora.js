@@ -142,8 +142,8 @@ botonCalcular.addEventListener("click", function() {
   /* Valores del ISSS y AFP */
   const TOPE_ISSS = 1000;
   let baseIsss = salario > TOPE_ISSS ? TOPE_ISSS : salario;
-  let descuentoIsss = baseIsss * 0.03;
-  let descuentoAfp = salario * 0.0725;
+  let descuentoIsss = Math.round(baseIsss * 3) / 100;
+  let descuentoAfp = Math.round(salario * 7.25) / 100;
 
   isssLabel.textContent = `ISSS: $${descuentoIsss.toFixed(2)}`;
   afpLabel.textContent = `AFP: $${descuentoAfp.toFixed(2)}`;
@@ -235,4 +235,3 @@ botonAceptar.addEventListener("click", async function() {
 });
 
 initNombreUsuario();
-
