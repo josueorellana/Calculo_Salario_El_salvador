@@ -1,3 +1,6 @@
+const KEY_NOMBRE_USER = "nombreUsuario";
+const KEY_SALARIO = "salario";
+
 let salarioIngresado = document.getElementById("salarioIngresado");
 let toastElement = document.getElementById("toast");
 let isssLabel = document.getElementById("isss");
@@ -94,24 +97,34 @@ async function descartarNombre() {
   await fetch("nombre.php?action=dismiss", { method: "POST" });
 }
 
-async function initNombreUsuario() {
-  const estado = await obtenerEstadoNombre();
+function mostrarResultado(distri) {  
+  const {isss, afp, isr, neto, salario } = distri
+  let salarioNetoLabel = document.getElementById("salarioNeto");
 
-  if (estado.nombre) {
-    mostrarNombre(estado.nombre);
-    return;
-  }
+  isssLabel.textContent = `ISSS: $${isss?? 0}`;
+  afpLabel.textContent = `AFP: $${afp?? 0}`;
+  isrLabel.textContent = `ISR: $${isr?? 0}`;
+  salarioNetoLabel.textContent = `Sueldo Neto: $${neto?? 0}`;
 
-  ocultarNombre();
+  salarioIngresado.value = salario ?? 0
+  botonLimpiar.disabled = false; /* Boton limpiar desactivado por defecto */
 
-  if (estado.dismissed) {
-    return;
-  }
-
-  setTimeout(() => {
-    mostrarModal();
-  }, 4000);
 }
+
+async function initNombreUsuario() {
+  ocultarNombre();
+  const nombreGuardado = localStorage.getItem(KEY_NOMBRE_USER);
+  const distri = localStorage.getItem(KEY_SALARIO);
+  
+  if (distri) {
+    mostrarResultado(JSON.parse(distri));
+  }
+
+  if (nombreGuardado) {
+    return mostrarNombre(nombreGuardado);
+  }
+   mostrarModal();
+  }
 
 /*Event listener para validar entrada en tiempo real*/
 salarioIngresado.addEventListener("input", function(e) {
@@ -145,9 +158,6 @@ botonCalcular.addEventListener("click", function() {
   let descuentoIsss = Math.round(baseIsss * 3) / 100;
   let descuentoAfp = Math.round(salario * 7.25) / 100;
 
-  isssLabel.textContent = `ISSS: $${descuentoIsss.toFixed(2)}`;
-  afpLabel.textContent = `AFP: $${descuentoAfp.toFixed(2)}`;
-
   /*Renta imponible*/
   let rentaImponible = salario - descuentoIsss - descuentoAfp;
 
@@ -169,11 +179,17 @@ botonCalcular.addEventListener("click", function() {
 
   let salarioNeto = salario - descuentoIsss - descuentoAfp - isr;
 
-  isrLabel.textContent = `ISR: $${isr.toFixed(2)}`;
-  let salarioNetoLabel = document.getElementById("salarioNeto");
-  salarioNetoLabel.textContent = `Sueldo Neto: $${salarioNeto.toFixed(2)}`;
+  const distri = {
+    isss: descuentoIsss.toFixed(2),
+    afp: descuentoAfp.toFixed(2),
+    isr: isr.toFixed(2),
+    neto: salarioNeto.toFixed(2),
+    salario: salario.toFixed(2)
+  }
 
-  botonLimpiar.disabled = false; /* Boton limpiar desactivado por defecto */
+  localStorage.setItem("salario", JSON.stringify(distri));
+  mostrarResultado(distri);
+
 });
 
 /*Efecto ripple para botones*/
@@ -206,12 +222,16 @@ aplicarRipple(botonCalcular);
 
 /* Limpia los labels y el input "boton limpiar" */
 botonLimpiar.addEventListener("click", function() {
+  localStorage.removeItem(KEY_SALARIO);
+  localStorage.removeItem(KEY_NOMBRE_USER);
   isssLabel.textContent = "ISSS: $";
   afpLabel.textContent = "AFP: $";
   isrLabel.textContent = "ISR: $";
   salarioNetoLabel.textContent = "Sueldo Neto: $";
   salarioIngresado.value = "";
+  nombreUsuarioTexto
   botonLimpiar.disabled = true;
+  nombreTexto.textContent = "";
 });
 
 botonNoInteresa.addEventListener("click", async function() {
@@ -222,16 +242,16 @@ botonNoInteresa.addEventListener("click", async function() {
 
 botonAceptar.addEventListener("click", async function() {
   const nombre = nombreInput.value.trim();
-  if (nombre === "") {
+  if (nombre.trim() === "") {
     return;
   }
   try {
-    const resultado = await guardarNombre(nombre);
-    mostrarNombre(resultado.nombre || nombre);
+    localStorage.setItem("nombreUsuario", nombre);
+    mostrarNombre( nombre);
     ocultarModal();
   } catch (e) {
     mostrarToast("No se pudo guardar el nombre");
   }
 });
 
-initNombreUsuario();
+window.addEventListener("load", initNombreUsuario);
